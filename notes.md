@@ -159,3 +159,188 @@ Ex.: Exibir postagens
         print(numero);
         numero++;
     }while(numero <= 5);
+
+## Funções
+
+**main** - principal função do Dart, que executará a página
+
+    void main(){
+        
+    }
+
+novas funções podem ser criadas, sempre iniciando por letra minúscula (nunca número), respeitando o padrão de nomenclatura e evitando palavras reservadas:
+
+    void exibirMensagem(String nome){
+        print(Nome: $nome);
+    }
+
+    void main(){
+        exibirMensagem('Maria');
+    }
+
+## Funções anônimas e parâmetros
+
+    void exibirDados(String nome, {int idade, double altura}){
+        final novaAltura = altura ?? 0;
+        print(nome: $nome);
+        print(idade: $idade);
+        print(altura: $novaAltura);
+    }
+
+    void main(){
+        exibirDados("Maria", idade: 36, altura: 1.58)
+    }
+
+*idade* e *altura* são parâmetros **opcionais**, pois estão dentro de { }. Para passar os valores de parâmetros opcionais, deve-se indicar o nome do parâmetro e o valor.
+
+Em `final novaAltura = altura ?? 0;`, estamos criando a variável `novaAltura` e atribuindo a ela o parâmetro `altura` e uma verificação para valor nulo `??`. Caso ele seja nulo, será substituido por `0`, uma vez que `altura` é um parâmetro opcional e caso não seja atribuido nenhum valor, ele irá retornar nulo.
+
+Uma boa prática é manter parâmetros opcioais sempre ao final, pois não será possível adicionar novos parêmetros obrigatórios após os opcionais.
+
+### Passando função como parâmetro
+
+    void calcularBonus(){
+        print("Seu bônus é de: 20);
+    }
+
+    void calcularSalario(double salario, Function funcaoParametro){
+        print(Seu salário é: $salario);
+        funcaoParametro();
+    }
+
+    void main(){
+        calcularSalario(100, calcularBonus);
+    }
+
+### Passando função anônima como parâmetro
+
+    void calcularSalario(double salario, Function funcaoParametro){
+        print(Seu salário é: $salario);
+        funcaoParametro();
+    }
+
+    void main(){
+        calcularSalario(100, (){
+            print("Seu bônus é de: 20);
+        });
+    }
+
+Normalmente utiliza-se funções anônimas quando os códigos são muito diferentes entre si, sendo trabalhoso criar uma função para cada situação
+
+### Classes e objetos
+
+No exemplo de uma casa, a casa seria o objeto, onde se pode realizar ações como morar, abrir janelas, acender luzes, etc; E a planta da casa seria a classe, que é um conceito, um template, que define como a casa vai ser, mas não é a casa prorpriamente dita.
+
+#### Atributos
+
+Objetos tem atributos, que definem as caraterísticas dos objetos, e no exemplo da casa acima, seriam como cor das paredes, tipo de janela, quantas vagas na garagem, etc.
+
+#### Métodos
+
+Objetos também tem métodos, que definem as ações que os objetos podem realizar, e no exemplo da casa acima, seriam como abrir portão, acender luzes, abrir janelas, etc.
+
+    class Casa{
+  
+    //Atributos
+    late String cor;
+    
+        //Métodos
+        void abrirJanela(int qtdJanelas, String comodo){
+            print("Abrir $qtdJanelas janela(s) da(o) $comodo");
+        }
+    }
+
+    void main() {
+    Casa minhaCasa = Casa();
+    minhaCasa.cor = "Amarela";
+    minhaCasa.abrirJanela(2, "sala");
+    print("Cor da minha casa: ${minhaCasa.cor}");
+    
+    Casa casaVeraneio = Casa();
+    casaVeraneio.cor = "Verde";
+    casaVeraneio.abrirJanela(5, "cozinha");
+    print("Cor da casa de veraneio: ${casaVeraneio.cor}");
+    
+    }
+
+    Output:
+
+    Abrir 2 janela(s) da(o) sala
+    Cor da minha casa: Amarela
+    Abrir 5 janela(s) da(o) cozinha
+    Cor da casa de veraneio: Verde
+
+#### Métodos dentro de métodos
+
+    class Casa{
+    
+    //Atributos
+    late String cor;
+    
+        //Métodos
+        void abrirJanela(){
+            print("Abrir janela da casa $cor");
+        }
+        
+        void abrirPorta(){
+            print("Abrir porta da casa $cor");
+        }
+
+        //
+        void abrirCasa(){
+            this.abrirJanela();
+            this.abrirPorta();
+        }
+    }
+
+    void main() {
+    Casa minhaCasa = Casa();
+    minhaCasa.cor = "Amarela";
+    minhaCasa.abrirCasa();
+    
+    Casa casaVeraneio = Casa();
+    casaVeraneio.cor = "Verde";
+    casaVeraneio.abrirCasa();
+    
+    }
+
+    Output:
+
+    Abrir janela da casa Amarela
+    Abrir porta da casa Amarela
+    Abrir janela da casa Verde
+    Abrir porta da casa Verde
+
+
+O `this` em `abrirCasa()` é utilizado para chamar os métodos `abrirjanela()` e `abrirPorta()`, que estão dentro da mesma classe `Casa`, da qual o método `abrirCasa()`, que está chamando os demais, está inserido
+
+Ex.: Simulando autenticação
+
+    class Usuario{
+        late String usuario;
+        late String senha;
+    
+        void autenticar(){
+            //Recuperar de DB
+            
+            const usuario = "mail@mail.com";
+            const senha = "123456";
+            
+            //Autenticar
+            if(this.usuario == usuario && this.senha == senha){
+                print("Acesso permitido");
+            }else{
+                print("Acesso negado");
+            }
+        }
+    }
+
+    void main() {
+
+        Usuario usuario = Usuario();
+        usuario.usuario = "mail@mail.com";
+        usuario.senha = "123456";
+        
+        usuario.autenticar();
+    }
+  
