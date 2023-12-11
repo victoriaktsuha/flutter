@@ -344,3 +344,164 @@ Ex.: Simulando autenticação
         usuario.autenticar();
     }
   
+### Construtores
+
+Utilizado para dar uma configuração inicial ao objeto, ao instanciá-lo, o construtor permite já passar alguns atributos iniciais ao objeto.
+
+#### Construtor "clássico"
+Após criar a classe com os atributos definidos, o construtor `Usuario(){}` será criado dentro dela, recebendo o mesmo nome da classe e os parâmetros necessários, e onde a ordem do atributos instanciados deve ser a mesma ordem dos parâmetros do construtor.
+
+    class Usuario{
+        late String usuario;
+        late String senha;
+        
+        Usuario(String usuario, String senha){
+            this.usuario = usuario;
+            this.senha = senha;
+            print("Configurações inicias do objeto");
+        }
+        
+            
+        void autenticar(){
+            //Recuperar de DB
+            
+            const usuario = "mail@mail.com";
+            const senha = "123456";
+            
+            //Autenticar
+            if(this.usuario == usuario && this.senha == senha){
+                print("Acesso permitido");
+            }else{
+                print("Acesso negado");
+            }
+        }
+    }
+
+    void main() {
+        Usuario usuario = Usuario("mail@mail.com","123456");
+        usuario.autenticar();
+    }
+
+    Output:
+    "
+    Configurações inicias do objeto
+    Acesso permitido
+    "
+
+#### Construtor "simples"
+Um modo mais simples de escrever um construtor é apenas passando parâmetros, sem instruções de código.
+
+    class Usuario{
+        late String usuario;
+        late String senha;
+        
+        Usuario(this.usuario, this.senha);
+        
+        // "Named constructor"
+        Usuario.nivel(this.usuario, this.senha){
+            nivel = "administrador";
+            print("Named constructor - usuário nível $nivel");
+        }
+        
+        void autenticar(){
+            //Recuperar de DB
+            
+            const usuario = "mail@mail.com";
+            const senha = "123456";
+            
+            //Autenticar
+            if(this.usuario == usuario &&   this.senha == senha){
+                print("Acesso permitido");
+            }else{
+                print("Acesso negado");
+            }
+        }
+    }
+
+    void main() {
+        //Usuario usuario = Usuario("mail@mail.com","123456");
+        Usuario usuarioAdmin = Usuario.nivel("mail@mail.com","123456");
+        //usuario.autenticar();
+    }
+
+    Output:
+    "Acesso permitido"
+
+#### "Named constructor"
+Outro modo de criar um construtor é nomeando-o, o "named constructor":
+
+    class Usuario{
+        late String usuario;
+        late String senha;
+        late String nivel;
+    
+        Usuario.nivel(this.usuario, this.senha){
+            nivel = "administrador";
+            print("Named constructor - usuário nível $nivel");
+        }
+            
+        void autenticar(){
+            //Recuperar de DB
+            
+            const usuario = "mail@mail.com";
+            const senha = "123456";
+            
+            //Autenticar
+            if(this.usuario == usuario && this.senha == senha){
+                print("Acesso permitido");
+            }else{
+                print("Acesso negado");
+            }
+        }
+    }
+
+    void main() {
+        Usuario usuarioAdmin = Usuario.nivel("mail@mail.com","123456");
+    }
+
+    Output:
+    "Named constructor - usuário nível administrador"
+
+### Getter & Setter
+**Métodos** para obter, validar (se necessário), retornar e configurar valores.
+
+*Getter* = Obter<br>
+*Setter* = Configurar
+
+`get` - retorna/recupera (não atribui!) valores.
+
+`set` - atribui valores (de variaveis ou diretamente) e também pode realizar validações antes de retornar.
+
+    class Conta{
+        double saldo = 0;
+        double _saque = 0;
+        
+        double get saque{
+            //Validações podem ser feitas antes de retornar o valor
+            return this._saque;
+        }
+        
+        set saque(double saque){
+            if(saque > 0 && saque <= 500){
+                this._saque = saque;
+            }else{
+                print("Valor máximo de saque de 500. Insira outro valor.");
+            }
+            
+        }
+    }
+
+    void main() {
+        Conta conta = Conta();
+        conta.saque = 900;
+    
+        print(conta.saque);
+    }
+    
+    Output:
+    "
+    Valor máximo de saque de 500. Insira outro valor.
+    0
+    "
+
+### Herança
