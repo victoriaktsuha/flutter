@@ -505,3 +505,187 @@ Outro modo de criar um construtor é nomeando-o, o "named constructor":
     "
 
 ### Herança
+
+Classes diferentes podem criar uma relação de herança com uma classe em comum, mantendo o código melhor estruturado e mais curto.
+
+```mermaid
+    flowchart TB
+    subgraph animal[Classe Animal]
+        direction LR
+        subgraph Atributos
+            Cor
+            Tamanho
+            Peso
+        end
+        subgraph Ações
+            correr
+            dormir
+        end
+    end
+    subgraph Cao[Classe Cao]
+        subgraph Ações Cão
+            latir
+        end
+    end
+    subgraph Passaro[Classe Passaro]
+        subgraph Ações Pássaro
+            voar
+        end
+    end
+    animal-.->|+ ações/atributos Classe Animal|Cao
+    animal-.->|+ ações/atributos Classe Animal|Passaro
+```
+
+    class Animal{
+    //atributo
+    late String cor;
+    
+        //método
+        void dormir(){
+            print("Dormir");
+        }
+    }
+
+    // parent Class Animal - child Class Cao
+    class Cao extends Animal{
+        void latir(){
+            print("Latir");
+        }
+    }
+
+    // parent Class Animal - child Class Cao
+    class Passaro extends Animal{
+        void voar(){
+            print("Voar");
+        }
+    }
+
+    void main() {
+        Cao cao = Cao();
+        Passaro passaro = Passaro();
+        
+        cao.cor = "Caramelo";
+        print("Cor do cão: ${cao.cor}");
+        cao.latir();
+        
+        passaro.cor = "Azul";
+        print("Cor do pássaro: ${passaro.cor}");
+        passaro.voar();
+    }
+
+    Output:
+    "
+    Cor do cão: Caramelo
+    Latir
+    Cor do pássaro: Azul
+    Voar
+    "
+
+### Sobrescrita de métodos
+    class Animal{
+        //atributo
+        late String cor;
+        
+        Animal(this.cor);
+        
+        //método
+        void dormir(){
+            print("Dormir");
+        }
+        void correr(){
+            print("Correr como um ");
+        }
+    }
+
+    // parent Class Animal - child Class Cao
+    class Cao extends Animal{
+        String corOrelha;
+        //método
+        
+        Cao(String cor, this.corOrelha) : super(cor);
+        
+        void latir(){
+            print("Latir");
+        }
+    
+        @override
+        void correr(){
+            //instancia o método 'correr' da parent class
+            super.correr();
+            print("cão");
+        }
+    }
+
+    // parent Class Animal - child Class Cao
+    class Passaro extends Animal{
+        String corBico;
+        
+        Passaro(String cor, this.corBico) : super(cor);
+        //método
+        void voar(){
+            print("Voar");
+        }
+    
+        @override
+        void correr(){
+            //instancia o método 'correr' da parent class
+            super.correr();
+            print("pássaro");
+        }
+    }
+
+    void main() {
+        Cao cao = Cao("Caramelo", "Branco");
+        Passaro passaro = Passaro("Amarelo", "Azul");
+        
+        print("Cor do passaro: ${passaro.cor}, cor do bico: ${passaro.corBico}");
+    }
+  
+### Modificadores Static e Final
+
+*Static* faz com que o atributo ou métodos sejam estáticos e não seja necessário instanciar a classe para acessá-los.
+
+    class Configuracoes{
+        static String identificadorApp = "ID5569JO3";
+        String ativarNotificacao = "Sim";
+
+        static void configuracaoInicial(){
+            print("Executa configurações iniciais");
+        }
+        
+    }
+
+    void main() {
+        Configuracoes config = Configuracoes();
+
+        //Com static
+        print("Com static: ${Configuracoes.identificadorApp}");
+
+        //Sem static
+        print("Sem static: ${config.ativarNotificacao}");
+
+        Configuracoes.configuracaoInicial();
+    }
+
+    Output:
+    "
+    Com static: ID5569JO3
+    Sem static: Sim
+    Executa configurações iniciais
+    "
+
+*Final* evita, por exemplo, que uma classe seja instanciada mais de uma vez, reescrevendo atributos e valores já definidos.
+
+    class Conta{
+        late String valor;
+    }
+
+    void main() {
+        final Conta conta = Conta();
+        conta.valor = "Nome";
+
+        // 'final' evita que a instancia abaixo ocorra, indicando erro
+        conta = Conta();
+        
+        print(conta.valor);
+    }
