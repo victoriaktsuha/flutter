@@ -683,9 +683,73 @@ Classes diferentes podem criar uma relação de herança com uma classe em comum
     void main() {
         final Conta conta = Conta();
         conta.valor = "Nome";
-
+ 
         // 'final' evita que a instancia abaixo ocorra, indicando erro
         conta = Conta();
         
         print(conta.valor);
     }
+
+### Classes Abstratas
+
+Classes abstratas recebem a keyword `abstract` no início e não permitem que se instancie elas, diferente das classes concretas que são as que já foram utilizadas acima como `class Animal`, `class Cao`, etc. Normalmente é atribuido a classes 'pai', onde são utilizadas principalmente apenas para estruturar atributos e métodos que serão utilizadas por outras classes 'filhas' e que normalmente são classes concretas.
+
+#### Métodos Abstratos
+
+Para que um método seja abstrato, basta remover `{ }`, mantendo apenas `( )`. 
+
+    void correr();
+
+Normalmente aplicado em métodos de uma classe 'pai', as classes 'filhas' são obrigadas a sobreescrever esse método.
+
+    @override
+    void correr(){
+        print("Correr");
+    }
+<br>
+
+    abstract class Animal{
+    
+        late String cor;
+        
+        //Método abstroto
+        void correr();
+    }
+
+    class Cao extends Animal{
+        void latir(){
+            print("Latir");
+        }
+    
+        // Método sobreescrito
+        @override
+        void correr(){
+            print("Correr");
+        }
+    }
+
+    class Passaro extends Animal{
+        void voar(){
+            print("Voar");
+        }
+        
+        // Método sobreescrito
+        @override
+        void correr(){
+            print("Correr");
+        }
+    }
+
+
+    void main() {
+        Cao cao = Cao();
+        cao.latir();
+        
+        Passaro passaro = Passaro();
+        passaro.voar();
+    }
+
+### Interface
+Pode-se dizer, a grosso modo, que uma interface é um contrato que, quando assumido por uma classe, deve ser implementado.
+
+Interface é utilizada pois podemos ter muitos objetos (classes) que podem possuir a mesma ação (métodos), porém, podem executá-las de maneiras diferentes.
