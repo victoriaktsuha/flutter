@@ -753,3 +753,226 @@ Normalmente aplicado em métodos de uma classe 'pai', as classes 'filhas' são o
 Pode-se dizer, a grosso modo, que uma interface é um contrato que, quando assumido por uma classe, deve ser implementado.
 
 Interface é utilizada pois podemos ter muitos objetos (classes) que podem possuir a mesma ação (métodos), porém, podem executá-las de maneiras diferentes.
+
+    abstract class Candidatura{
+        void participarEleicao();
+    }
+    abstract class Propostas{
+        void campanhaEleitoral();
+    }
+
+    abstract class Cidadao{
+        void direitosDeveres(){
+            print("Todo cidadaõ tem direitos e deveres");
+        }
+    }
+
+    class Presidente extends Cidadao implements Candidatura, Propostas{
+        @override
+        void participarEleicao(){
+            print("Candidato a cargo de presidente")
+        }
+
+        @override
+        void campanhaEleitoral(){
+            print("Congelar impostos")
+        }
+    }
+
+    class Governador extends Cidadao implements Candidatura{
+        @override
+        void participarEleicao(){
+            print("Candidato a cargo de governador")
+        }
+
+        @override
+        void campanhaEleitoral(){
+            print("Investir em transporte público")
+        }
+
+    }
+
+    void main(){
+        Presidente presidente = Presidente();
+        presidente.direitosdeveres();
+        presidente.participarEleicao();
+
+        Governador governador = Governador();
+        governador.direitosdeveres();
+        governador.participarEleicao();       
+    }
+
+Uma classe não pode herdar mais que uma outra classe, mas pode implementar mais que uma interface.
+
+Para um método que deverá apresentar comportamentos muito diversos em outras classes, não seria prático utilizá-lo via herança, mas sim via interface.
+
+### Mixins
+Mixins é uma maneira de utilizar códigos em múltiplas hierarquias de classes.
+
+abstract class Candidatura{
+        void participarEleicao();
+    }
+    abstract class Propostas{
+        void campanhaEleitoral();
+    }
+
+    mixin Discurso {
+        void apresentarCampanha(){
+            print("Discursar");
+        }
+    }
+
+    abstract class Cidadao{
+        void direitosDeveres(){
+            print("Todo cidadaõ tem direitos e deveres");
+        }
+    }
+
+    class Presidente extends Cidadao implements Candidatura, Propostas{
+        @override
+        void participarEleicao(){
+            print("Candidato a cargo de presidente")
+        }
+
+        @override
+        void campanhaEleitoral(){
+            print("Congelar impostos")
+        }
+    }
+
+    class Governador extends Cidadao implements Candidatura with Discurso{
+        @override
+        void participarEleicao(){
+            print("Candidato a cargo de governador")
+        }
+
+        @override
+        void campanhaEleitoral(){
+            print("Investir em transporte público")
+        }
+
+    }
+
+    void main(){
+        Presidente presidente = Presidente();
+        presidente.direitosdeveres();
+        presidente.participarEleicao();
+
+        Governador governador = Governador();
+        governador.direitosdeveres();
+        governador.participarEleicao();
+        governador.Discurso();
+    }
+
+Com interfaces, obrigamos classes a implementar o método que a interface possui, mas com mixins, o método já é adicionado pronto a classe sem obrigatoriedade de implementação.
+
+### Coleções - listas
+*Collection ou coleções*: são implementações de estruturas de dados, que é utilizado para armazenar itens:
+- List 
+- Maps
+
+<br>
+
+    void main(){
+        List<String> lista = [
+            "Fruta",
+            "Temperos"
+        ];
+        print(lista);
+    }
+
+    void main(){
+        List<int> numeros = [
+            1,
+            5,
+            10
+        ];
+        print(numeros);
+    }
+
+    void main(){
+        List random = [
+            1,
+            "Fruta",
+            10.60
+        ];
+        print(random);
+    }
+
+    lista.add("Bebidas");
+    print( lista );
+
+    // na posição 1 da lista "lista", será inserido a string "Higiene" 
+    lista.insert(1, "Higiene");
+    print( lista );
+
+    lista.removeAt(0);
+    print( lista );
+
+    //verificar item na lista
+    print(lista.contains("Frutas"));
+     
+    print(lista.length);
+
+    //armazenar objetos
+    class Usuario{
+        String nome;
+        int idade;
+
+        Usuario(this.nome, this.idade);
+    }
+
+    void main(){
+        Usuario usuario = Usuario("Nome1", 10);
+    }
+
+    //List que armazena objetos do tipo 'Usuario'
+    List<Usuario> usuarios = List();
+    usuarios.add("Nome2", 63);
+
+    //'percorrendo' a lista de usuarios
+    for (Usuario usuario in usuarios){
+        print(usuario.nome);
+    }
+
+### Coleções - mapas
+
+Com *maps*, pode-se definir um indice customizado
+
+void main(){
+
+    Map frutas = Map();
+    frutas["Mo"] = "Morango";
+    frutas[1] = "Manga";
+
+    print( frutas["Mo"] );
+    print( frutas[1] );
+
+    Map<int, String> estados = Map();
+    estados[0] = "São Paulo";
+    estados[1] = "Minas Gerais";
+
+    print( estados[0] );
+
+    //mostra apenas as chaves
+    print( estados.keys );
+
+    //mostra apenas os valores
+    print( estados.values );
+
+    //se contém
+    print( estados.containsKey(0) );
+    print( estados.containsValue("São Paulo") );
+
+    //
+    estados.forEach(
+        (chave, valor) => print($chave, $valor)
+    );
+
+
+    Map<dynamic, String> usuarios = Map();
+    usuarios[1] = "Nome1";
+    usuarios["dois"] = "Nome2";
+    usuarios[3.0] = "Nome3";
+    
+}
