@@ -939,40 +939,42 @@ Com interfaces, obrigamos classes a implementar o método que a interface possui
 
 Com *maps*, pode-se definir um indice customizado
 
-void main(){
+    void main(){
 
-    Map frutas = Map();
-    frutas["Mo"] = "Morango";
-    frutas[1] = "Manga";
+        Map frutas = Map();
+        frutas["Mo"] = "Morango";
+        frutas[1] = "Manga";
 
-    print( frutas["Mo"] );
-    print( frutas[1] );
+        print( frutas["Mo"] );
+        print( frutas[1] );
 
-    Map<int, String> estados = Map();
-    estados[0] = "São Paulo";
-    estados[1] = "Minas Gerais";
+        Map<int, String> estados = Map();
+        estados[0] = "São Paulo";
+        estados[1] = "Minas Gerais";
 
-    print( estados[0] );
+        print( estados[0] );
 
-    //mostra apenas as chaves
-    print( estados.keys );
+        //mostra apenas as chaves
+        print( estados.keys );
 
-    //mostra apenas os valores
-    print( estados.values );
+        //mostra apenas os valores
+        print( estados.values );
 
-    //se contém
-    print( estados.containsKey(0) );
-    print( estados.containsValue("São Paulo") );
+        //se contém
+        print( estados.containsKey(0) );
+        print( estados.containsValue("São Paulo") );
 
-    //
-    estados.forEach(
-        (chave, valor) => print($chave, $valor)
-    );
+        //
+        estados.forEach(
+            (chave, valor) => print($chave, $valor)
+        );
 
 
-    Map<dynamic, String> usuarios = Map();
-    usuarios[1] = "Nome1";
-    usuarios["dois"] = "Nome2";
-    usuarios[3.0] = "Nome3";
+        Map<dynamic, String> usuarios = Map();
+        usuarios[1] = "Nome1";
+        usuarios["dois"] = "Nome2";
+        usuarios[3.0] = "Nome3";
+        
+    }
+
     
-}
